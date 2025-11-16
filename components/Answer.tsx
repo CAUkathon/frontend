@@ -1,64 +1,51 @@
-import ImageScale from './ImageScale';
-import ChoiceList from './ChoiceList';
-import TextAnswer from './TextAnswer';
 import { Question } from '@/lib/types';
-import { useState } from 'react';
+import ImageScale from './ImageScale';
 import ImageChoice from './ImageChoice';
 import MBTIChoice from './MBTIChoice';
+import ChoiceList from './ChoiceList';
+import TextAnswer from './TextAnswer';
 
 interface AnswerProps {
   question: Question;
-  answer?: string;
-  onAnswer: (v: string) => void;
+  answer?: string | string[];
+  onAnswer: (v: string | string[]) => void;
 }
 
 export default function Answer({ question, answer, onAnswer }: AnswerProps) {
-  const [selected, setSelected] = useState<string[]>([]);
-
-  // 이미지 척도
+  // Q1, Q2: 이미지 척도형 (여러 개 선택 가능)
   if (question.questionId === 1 || question.questionId === 2) {
-    return (
-      <ImageScale
-        question={question}
-        selected={selected}
-        onSelect={setSelected}
-      />
-    );
+    const selected = (answer as string[]) || [];
+    return <ImageScale question={question} selected={selected} onSelect={onAnswer} />;
   }
 
-  // MBTI 선택
+  // Q3: MBTI
   if (question.questionId === 3) {
-    return (
-        <MBTIChoice
-        selected={answer ? JSON.parse(answer) : {}}
-        onSelect={(obj) => onAnswer(JSON.stringify(obj))}
-        />
-    );
-    }
+    return <MBTIChoice selected={answer as string} onSelect={onAnswer as (v: string) => void} />;
+  }
 
-  // 이미지 선택
+  // Q5, Q7: 이미지 선택
   if (question.questionId === 5 || question.questionId === 7) {
     return (
       <ImageChoice
         questionId={question.questionId}
         choices={question.choices || []}
-        selected={answer}
-        onSelect={onAnswer}
+        selected={answer as string || ''}
+        onSelect={onAnswer as (v: string) => void}
       />
     );
   }
 
   // 주관식
   if (!question.choices) {
-    return <TextAnswer value={answer || ''} onChange={onAnswer} />;
+    return <TextAnswer value={answer as string || ''} onChange={onAnswer as (v: string) => void} />;
   }
 
-  // 텍스트 선택
+  // 선택형 텍스트
   return (
     <ChoiceList
       choices={question.choices}
-      selected={answer}
-      onSelect={onAnswer}
+      selected={answer as string || ''}
+      onSelect={onAnswer as (v: string) => void}
     />
   );
 }

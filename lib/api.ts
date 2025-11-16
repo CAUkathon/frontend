@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://43.200.59.45:8080';
+const API_BASE_URL = 'https://cauhackathon-team2.p-e.kr';
 
 import { LoginRequest, LoginResponse, UserInfo, Question } from "./types";
 

@@ -11,7 +11,7 @@ interface Props {
 
 export default function ImageChoice({ questionId, choices, selected, onSelect }: Props) {
   return (
-    <div className="flex justify-center gap-6">
+    <div className="flex justify-center gap-7">
       {choices.map((c) => {
         const isSelected = selected === c;
 
@@ -25,7 +25,7 @@ export default function ImageChoice({ questionId, choices, selected, onSelect }:
             onClick={() => onSelect(c)}
             className="transition-transform hover:scale-110 active:scale-95"
           >
-            <img src={img} alt={c} className="w-24 h-24 object-contain" />
+            <img src={img} alt={c} className="h-28 object-contain" />
           </button>
         );
       })}
