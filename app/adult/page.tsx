@@ -139,7 +139,6 @@ export default function AdultAdminPage() {
             onClick={handleBuildTeams}
             disabled={isButtonDisabled || !hasUnbuiltMembers}
             className={`
-              font-[MeetMe] 
               rounded-2xl shadow-md text-lg px-8 py-4
               transition
               ${

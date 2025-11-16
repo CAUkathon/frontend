@@ -34,3 +34,7 @@ html, body, * {
 button {
   @apply cursor-pointer;
 }
+
+input, textarea, select, option {
+  @apply font-[Pretendard];
+}

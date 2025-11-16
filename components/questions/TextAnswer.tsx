@@ -20,7 +20,7 @@ export default function TextAnswer({ value, onChange }: Props) {
           value={value}
           onChange={e => onChange(e.target.value)}
           placeholder="아기사자가 궁금해..."
-          className="w-70 p-3 rounded-xl border border-gray-300 font-[Pretendard]"
+          className="w-70 p-3 rounded-xl border border-gray-300"
         />
     </div>
   );

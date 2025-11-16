@@ -68,7 +68,7 @@ export default function LoginForm() {
                     <input
                         {...register('name', { required: '이름을 입력하세요.' })}
                         placeholder="이름"
-                        className="w-[268px] h-[35px] rounded-full border border-gray-300 px-3 font-[Pretendard]"
+                        className="w-[268px] h-[35px] rounded-full border border-gray-300 px-3"
                     />
                 </div>
                 <div className="flex">
@@ -76,16 +76,16 @@ export default function LoginForm() {
                         {...register('password', { required: '비밀번호를 입력하세요.', minLength: {value: 4, message: '비밀번호를 4자리로 설정해주세요.'}, maxLength: {value: 4, message: '비밀번호를 4자리로 설정해주세요.'} })}
                         type="password"
                         placeholder="4자리 비밀번호"
-                        className="w-[268px] h-[35px] rounded-full border border-gray-300 px-3 font-[Pretendard]"
+                        className="w-[268px] h-[35px] rounded-full border border-gray-300 px-3"
                     />
                 </div>
                 <div className="flex justify-center items-center gap-2">
-                    <select value={gender} onChange={e => setGender(e.target.value)} className="h-[35px] border border-gray-300 rounded-full px-3 font-[Pretendard]">
+                    <select value={gender} onChange={e => setGender(e.target.value)} className="h-[35px] border border-gray-300 rounded-full px-3">
                         <option value="남자">남자</option>
                         <option value="여자">여자</option>
                     </select>
                 </div>
-                <button type="submit" className="text-2xl border border-gray-300 rounded-full px-5 py-2 mt-7 font-[MeetMe] text-white hover:brightness-95" style={{ backgroundColor: '#FF6F00' }}>시작하기</button>
+                <button type="submit" className="text-2xl border border-gray-300 rounded-full px-5 py-2 mt-7 text-white hover:brightness-95" style={{ backgroundColor: '#FF6F00' }}>시작하기</button>
             </form>
         </div>
     )

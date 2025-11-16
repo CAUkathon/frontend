@@ -36,7 +36,7 @@ export default function QuestionNav({
           <button
             onClick={onPrevious}
             disabled={currentIndex === 0}
-            className={`w-22 py-3 rounded-full font-[MeetMe] text-2xl
+            className={`w-22 py-3 rounded-full text-2xl
               ${
                 currentIndex === 0
                   ? 'bg-gray-200 text-gray-400 border-gray-200'
@@ -49,14 +49,14 @@ export default function QuestionNav({
           {isLast ? (
             <button
               onClick={onSubmit}
-              className="w-22 py-3 rounded-full bg-blue-500 text-white font-[MeetMe] text-2xl hover:brightness-95"
+              className="w-22 py-3 rounded-full bg-blue-500 text-white text-2xl hover:brightness-95"
             >
               제출
             </button>
           ) : (
             <button
               onClick={onNext}
-              className="w-22 py-3 rounded-full font-[MeetMe] text-2xl text-white hover:brightness-95"
+              className="w-22 py-3 rounded-full text-2xl text-white hover:brightness-95"
               style={{ backgroundColor: '#FF6F00' }}
             >
               다음

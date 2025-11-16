@@ -49,7 +49,7 @@ export default function MyPage() {
     fetchUser();
   }, [id, router]);
 
-  if (loading) return <div className="flex justify-center items-center h-screen text-lg font-[MeetMe]">로딩 중...</div>;
+  if (loading) return <div className="flex justify-center items-center h-screen text-lg">로딩 중...</div>;
 
   if (!user) return null;
 

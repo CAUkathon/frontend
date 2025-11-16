@@ -87,7 +87,7 @@ export default function MBTIChoice({ selected, onSelect }: Props) {
                 <button
                   key={item}
                   onClick={() => handleSelect(index, item)}
-                  className={`flex-1 rounded-lg border-2 font-[MeetMe] text-2xl transition
+                  className={`flex-1 rounded-lg border-2 text-2xl transition
                     ${
                       isSelected
                         ? "border-blue-500 bg-blue-50"
