@@ -33,7 +33,7 @@ export default function LoginForm() {
             if (loginRes.role === 'ADULT') {
                 router.push('/adult');
             } else {
-                router.push('/my');
+                router.push(`/my/${loginRes.memberId}`);
             }
         } catch (error: any) {
             const status = error?.status ?? error?.response?.status ?? (typeof error === 'string' && error.includes('403') ? 403 : undefined);
