@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/Header";
-import StyledLayoutWrapper from "@/components/StyledLayoutWrapper";
+import Header from "@/components/common/Header";
+import StyledLayoutWrapper from "@/components/common/StyledLayoutWrapper";
 
 export const metadata: Metadata = {
   title: "멋사 조짜조",

@@ -11,9 +11,9 @@
 import { useEffect, useState } from 'react';
 import { getQuestions, joinUser } from '@/lib/api';
 import { Question } from '@/lib/types';
-import ProgressRate from '@/components/ProgressRate';
-import QuestionNav from '@/components/QuestionNav';
-import Answer from '@/components/Answer';
+import ProgressRate from '@/components/questions/ProgressRate';
+import QuestionNav from '@/components/questions/QuestionNav';
+import Answer from '@/components/questions/Answer';
 
 export default function QuestionsPage() {
   const [questions, setQuestions] = useState<Question[]>([]);	// 질문 목록
