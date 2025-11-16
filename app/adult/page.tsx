@@ -5,14 +5,34 @@ import CounterInput from "@/components/admin/CounterInput";
 import AnswerCard from "@/components/admin/AnswerCard";
 import { API_BASE_URL } from "@/lib/api";
 
+// 임시방편
+interface Member {
+  id: number;
+  name: string;
+  leader: boolean;
+  answers: Record<string, any>; // answers 구조에 맞게 수정 가능
+}
+
+interface Team {
+  id: number;
+  teamName: string;
+  members: Member[];
+}
+
+interface AdultResult {
+  memberId: number;
+  memberName: string;
+  answers: Record<string, any>;
+}
+
 export default function AdultAdminPage() {
   const [totalMembers, setTotalMembers] = useState<number>(30);
   const [teamCount, setTeamCount] = useState<number>(5);
 
   const [answerCount, setAnswerCount] = useState<number>(0);
-  const [results, setResults] = useState<any[]>([]);
+  const [results, setResults] = useState<AdultResult[]>([]);
 
-  const [teams, setTeams] = useState<any[]>([]);
+  const [teams, setTeams] = useState<Team[]>([]);
   const [hasUnbuiltMembers, setHasUnbuiltMembers] = useState<boolean>(true);
 
   const [activeTeam, setActiveTeam] = useState<number>(0); // 0 = 전체 보기
@@ -53,7 +73,7 @@ export default function AdultAdminPage() {
       );
 
 
-      const mergedTeams = (data.teams ?? []).map((team) => ({
+      const mergedTeams: Team[] = (data.teams ?? []).map((team: Team) => ({
         ...team,
         members: team.members.map((m) => ({
           ...m,
