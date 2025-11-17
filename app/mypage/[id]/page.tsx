@@ -68,7 +68,7 @@ export default function MyPage() {
     >
       <h2 className="text-3xl">당신은... {user.answer}!</h2>
 
-      <div className="flex flex-col items-center gap-4 w-[240px] relative">
+      <div className="flex flex-col items-center gap-4 w-60 relative">
         <img src={user.image} alt={user.answer} />
         <p className="text-[22px] text-center text-orange-500">
           {user.description}

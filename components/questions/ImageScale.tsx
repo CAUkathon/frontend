@@ -34,8 +34,8 @@ export default function ImageScale({ question, selected = [], onSelect }: Props)
   };
 
   return (
-    <div className="flex flex-col">
-      <div className="flex justify-center mb-2">
+    <div className="flex flex-col mt-1">
+      <div className="flex justify-center">
         <p className="text-lg" style={{ color: "#FF6F00" }}>
           ※ 해당하는 만큼 눌러주세요! (1개 이상) ※
         </p>

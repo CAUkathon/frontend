@@ -101,25 +101,25 @@ export default function QuestionsPage() {
 
   return (
     <div className="flex flex-col w-full items-center bg-white">
-      <div className="w-full max-w-[375px] flex flex-col justify-between" style={{ height: 'calc(100vh - var(--header-height))' }}>
+      <div className="w-full max-w-[375px] flex flex-col justify-around items-center" style={{ height: 'calc(100vh - var(--header-height))' }}>
 
-		{/* 진행률 표시 바 */}
+		  {/* 진행률 표시 바 */}
         <ProgressRate current={currentIndex + 1} total={questions.length} />
 
-		{/* 질문 영역 (laptop 이미지 + 질문 텍스트) */}
+		  {/* 질문 영역 (laptop 이미지 + 질문 텍스트) */}
         <div className="relative flex justify-center">
           <img src="/images/laptop.png" className="w-[320px]" />
-          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 text-center">
-            <h2 className="text-xl  text-black">{currentQuestion.content}</h2>
+          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
+            <h2 className="text-xl text-black">{currentQuestion.content}</h2>
           </div>
         </div>
 
-		{/* 응답 영역 컴포넌트 */}
-        <div className="px-5 py-2">
+		  {/* 응답 영역 컴포넌트 */}
+        <div className="w-[320px]">
           <Answer question={currentQuestion} answer={answers[currentQuestion.questionId]} onAnswer={handleAnswer} />
         </div>
 
-		{/* 이전/다음/제출 버튼 */}
+		  {/* 이전/다음/제출 버튼 */}
         <QuestionNav
           currentIndex={currentIndex}
           total={questions.length}

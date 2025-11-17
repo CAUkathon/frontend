@@ -25,8 +25,8 @@ export default function ChoiceList({ choices, selected, onSelect }: Props) {
           onClick={() => onSelect(choice)}
           className={`w-full p-2 rounded-lg border-2 text-xl ${
             selected === choice
-              ? 'border-blue-500 bg-blue-50'
-              : 'border-gray-300 hover:border-gray-400'
+              ? "border-[#FF6F00] bg-[#FFF0E0]"
+              : "border-gray-300 hover:border-gray-400"
           }`}
         >
           {choice}

@@ -29,7 +29,7 @@ export default function QuestionNav({
   const isLast = currentIndex === total - 1;
 
   return (
-    <div className="w-full bg-white px-4 pb-4">
+    <div className="w-full bg-white pb-4">
       <div className="w-full max-w-[375px] mx-auto">
 
         <div className="flex gap-3 justify-center">

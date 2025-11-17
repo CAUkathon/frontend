@@ -90,7 +90,7 @@ export default function MBTIChoice({ selected, onSelect }: Props) {
                   className={`flex-1 rounded-lg border-2 text-2xl transition
                     ${
                       isSelected
-                        ? "border-blue-500 bg-blue-50"
+                        ? "border-[#FF6F00] bg-[#FFF0E0]"
                         : "border-gray-300 hover:border-gray-400"
                     }
                   `}
