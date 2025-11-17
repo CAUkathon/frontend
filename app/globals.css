@@ -40,6 +40,11 @@ html, body, * {
 
 button {
   @apply font-[OkDanDan];
+  @apply cursor-pointer;
+}
+
+button:disabled {
+  @apply cursor-not-allowed;
 }
 
 input, textarea, select, option {

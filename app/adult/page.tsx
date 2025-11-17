@@ -247,7 +247,7 @@ export default function AdultAdminPage() {
         disabled={isButtonDisabled || !hasUnbuiltMembers}
         className={`rounded-3xl text-lg p-4 transition w-full md:w-auto border border-gray-300 ${
           isButtonDisabled || !hasUnbuiltMembers
-            ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+            ? "bg-gray-300 text-gray-500"
             : "bg-[#FF6F00] text-white hover:brightness-95"
         }`}
       >

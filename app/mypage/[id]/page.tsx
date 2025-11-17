@@ -97,7 +97,7 @@ export default function MyPage() {
           ${
             user.teamBuilt
               ? 'text-white bg-[#FF6F00] hover:brightness-95'
-              : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              : 'bg-gray-300 text-gray-500'
           }`}
       >
         우리 조 보러 가기
