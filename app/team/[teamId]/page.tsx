@@ -7,11 +7,11 @@ import { API_BASE_URL } from "@/lib/api";
 // key를 한국어 라벨로 바꿔주는 매핑 함수
 function convertLabel(key: string) {
   const map: Record<string, string> = {
-    mbti: "mbti",
+    mbti: "MBTI",
     hobby: "취미/관심사",
     favoriteFood: "좋아하는 음식",
     wildLionAnswer: "야생의 사자를 만나면",
-    drinkScore: "음주 점수",
+    drinkScore: "음주 선호도",
   };
 
   return map[key] || key;
@@ -65,28 +65,26 @@ export default function TeamDetailPage() {
   if (!team) return null;
 
   return (
-    <div className="w-full max-w-[420px] mx-auto px-5 pb-20">
+    <div className="w-full max-w-[500px] mx-auto px-6">
       {/* 팀명 */}
-      <div className="text-center mt-8 mb-6">
-        <h1 className="text-3xl font-extrabold">{team.teamName}</h1>
+      <div className="text-center m-8">
+        <h1 className="text-3xl" style={{ fontFamily: 'OkDanDan', color: '#FF6F00' }}>{team.teamName}</h1>
       </div>
 
-      {/* 구분선 */}
-      <div className="w-full h-[1px] bg-gray-300 mb-6"></div>
-
       {/* 멤버 리스트 */}
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col  gap-6">
         {team.members.map((m: any, idx: number) => (
           <div
             key={idx}
-            className="flex gap-4 p-4 rounded-2xl bg-gray-100 shadow-sm"
+            className="flex items-center gap-4 p-4 rounded-2xl border border-gray-300"
+            style={{ backgroundColor: '#f7f7f7' }}
           >
             {/* 이미지 */}
-            <div className="w-[150px] h-[150px] bg-gray-300 overflow-hidden flex-shrink-0">
+            <div className="w-[130px] h-[130px] overflow-hidden shrink-0">
             <img
               src={m.image}
               alt={m.name}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover border border-gray-300"
             />
           </div>
 
@@ -94,7 +92,7 @@ export default function TeamDetailPage() {
             {/* 멤버 정보 */}
             <div className="flex flex-col justify-center">
               {/* 이름 + 리더 표시 */}
-              <p className="font-bold text-lg">
+              <p className="text-2xl" style={{ fontFamily: 'OkDanDan' }}>
                 {m.name} {m.leader && "⭐"}
               </p>
 
@@ -102,11 +100,16 @@ export default function TeamDetailPage() {
               {Object.entries(m)
                 .filter(([key]) => !["name", "image", "leader"].includes(key))
                 .map(([key, value], idx) => (
-                  <p key={idx} className="text-sm text-gray-700">
-                    <span className="font-medium">
-                      {convertLabel(key)}:
-                    </span>{" "}
-                    {String(value)}
+                  <p key={idx} className="text-m">
+                    {typeof value === "number" ? (
+                      <>
+                        <span>{convertLabel(key)}: </span>
+                        {value}
+                      </>
+                    ) : (
+                      // 문자열이면 그대로 출력
+                      <>{String(value)}</>
+                    )}
                   </p>
                 ))}
             </div>
@@ -115,12 +118,15 @@ export default function TeamDetailPage() {
       </div>
 
       {/* 처음 화면으로 버튼 */}
-      <button
-        onClick={() => router.push("/")}
-        className="mt-10 w-full py-3 text-lg rounded-xl text-white bg-[#FF6F00] hover:brightness-95 transition"
-      >
-        처음 화면으로
-      </button>
+      <div className="flex justify-center">
+        <button
+          onClick={() => router.push("/")}
+          className="text-2xl border border-gray-300 rounded-full px-5 py-2 m-8 text-white hover:brightness-95"
+          style={{ backgroundColor: '#FF6F00' }}
+        >
+          처음 화면으로
+        </button>
+      </div>
     </div>
   );
 }
