@@ -39,7 +39,7 @@ export default function AdultAdminPage() {
 
   const [showResetModal, setShowResetModal] = useState<boolean>(false);
 
-  // 개별 삭제 모달
+  
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
 
@@ -101,9 +101,9 @@ export default function AdultAdminPage() {
 
       const answerMap = new Map(results.map((r) => [r.memberName, r.answers]));
 
-      const mergedTeams = (data.teams ?? []).map((team) => ({
+      const mergedTeams = (data.teams ?? []).map((team: any) => ({
         ...team,
-        members: team.members.map((m) => ({
+        members: team.members.map((m: any) => ({
           ...m,
           answers: answerMap.get(m.name) ?? {},
         })),
@@ -344,7 +344,7 @@ export default function AdultAdminPage() {
                     </h2>
 
                     <div className="flex flex-col gap-2">
-                      {team.members.map((m, idx) => (
+                      {team.members.map((m: any, idx: number) => (
                         <AnswerCard
                           key={idx}
                           name={m.name}
@@ -378,7 +378,7 @@ export default function AdultAdminPage() {
                 </h2>
 
                 <div className="flex flex-col gap-2">
-                  {teams[activeTeam - 1].members.map((m, idx) => (
+                  {teams[activeTeam - 1].members.map((m: any, idx: number) => (
                     <AnswerCard
                       key={idx}
                       name={m.name}
