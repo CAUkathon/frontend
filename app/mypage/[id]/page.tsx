@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { getUserInfo } from '@/lib/api';
+import { API_BASE_URL, getUserInfo } from '@/lib/api';
 
 interface UserResult {
   id: number;
@@ -52,13 +52,27 @@ export default function MyPage() {
   if (!user) return null;
 
   // 클릭 핸들러
-  const handleGoTeam = () => {
-    if (!user.teamBuilt) return; // 팀 배정 전 클릭 불가
-    if (!user.teamId) {
-      alert('아직 팀이 배정되지 않았습니다.');
-      return;
+  const handleGoTeam = async () => {
+    if (!user?.teamBuilt) return;
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/team`);
+      const data = await res.json();
+
+      const teamIndex = data.teams.findIndex((team: any) =>
+        team.members.some((m: any) => m.name === user.name)
+      );
+
+      if (teamIndex === -1) {
+        alert("아직 팀이 배정되지 않았습니다.");
+        return;
+      }
+
+      router.push(`/team/${teamIndex + 1}`); // teamId = index + 1
+    } catch (err) {
+      console.error(err);
+      alert("팀 정보를 불러오는 중 오류가 발생했습니다.");
     }
-    router.push(`/team/${user.teamId}`);
   };
 
   return (
