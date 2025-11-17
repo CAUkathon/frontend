@@ -23,7 +23,7 @@ export default function AnswerCard({ name, answers, isLeader, teamColor }: Answe
 
   return (
     <div
-      className="w-full rounded-2xl p-5 shadow-sm"
+      className="w-full rounded-2xl p-5 border border-gray-300"
       style={{
         border: teamColor ? `2px solid ${teamColor}` : "1px solid #ddd",
         backgroundColor:
@@ -32,18 +32,18 @@ export default function AnswerCard({ name, answers, isLeader, teamColor }: Answe
     >
       {/* 이름 */}
       <h3
-        className="font-semibold text-lg mb-3 text-center"
-        style={{ color: teamColor ?? "#333" }}
+        className="text-2xl mb-3 text-center"
+        style={{ color: teamColor ?? "#333", fontFamily: 'OkDanDan' }}
       >
         {name} {isLeader && "⭐"}
       </h3>
 
       {/* 질문/답변 리스트 */}
-      <div className="flex flex-col gap-1 text-sm text-gray-700">
+      <div className="flex flex-col gap-1 text-lg">
         {entries.length > 0 ? (
           entries.map(([label, value], index) => (
             <div key={index} className="flex gap-2">
-              <span className="font-medium whitespace-nowrap">{label}:</span>
+              <span className="whitespace-nowrap">{label}:</span>
               <span>{value}</span>
             </div>
           ))

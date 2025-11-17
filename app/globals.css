@@ -46,3 +46,13 @@ button {
 input, textarea, select, option {
   @apply font-[Pretendard];
 }
+
+/* 스크롤바 숨기기용 */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE, Edge */
+  scrollbar-width: none;     /* Firefox */
+}

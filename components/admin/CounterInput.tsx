@@ -30,7 +30,7 @@ export default function CounterInput({
 
   return (
     <div className="flex flex-col gap-1">
-      <span className="text-sm text-gray-600">{label}</span>
+      <span>{label}</span>
 
       <div
         className={`flex items-center justify-between w-[200px] h-[35px] 

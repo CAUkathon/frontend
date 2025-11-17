@@ -38,8 +38,6 @@ export default function AdultAdminPage() {
   const [activeTeam, setActiveTeam] = useState<number>(0);
 
   const [showResetModal, setShowResetModal] = useState<boolean>(false);
-
-  
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
 
@@ -52,23 +50,17 @@ export default function AdultAdminPage() {
     "#5AC8FA",
   ];
 
-  /* 개별 삭제 */
   const handleDeleteAnswer = async () => {
     if (!deleteTargetId) return;
-
     try {
       const res = await deleteMember(deleteTargetId);
-
       if (!res.ok) {
         alert("삭제 실패");
         return;
       }
-
-      // UI 반영
       setResults((prev) => prev.filter((r) => r.memberId !== deleteTargetId));
       setAnswerCount((prev) => prev - 1);
       setTotalMembers((prev) => prev - 1);
-
       alert("삭제되었습니다.");
     } catch {
       alert("삭제 중 오류가 발생했습니다.");
@@ -78,12 +70,10 @@ export default function AdultAdminPage() {
     }
   };
 
-  /** GET /adult */
   const fetchAdultResults = async () => {
     try {
       const res = await fetch(`${API_BASE_URL}/adult`);
       const data = await res.json();
-
       setAnswerCount(data.memberCount ?? 0);
       setResults(data.results ?? []);
     } catch {
@@ -91,16 +81,13 @@ export default function AdultAdminPage() {
     }
   };
 
-  /** GET /team */
   const fetchTeamInfo = async () => {
     try {
       const res = await fetch(`${API_BASE_URL}/team`);
       const data = await res.json();
-
       setHasUnbuiltMembers(data.hasUnbuiltMembers);
 
       const answerMap = new Map(results.map((r) => [r.memberName, r.answers]));
-
       const mergedTeams = (data.teams ?? []).map((team: any) => ({
         ...team,
         members: team.members.map((m: any) => ({
@@ -115,7 +102,6 @@ export default function AdultAdminPage() {
     }
   };
 
-  /** POST /team */
   const handleBuildTeams = async () => {
     try {
       const res = await fetch(`${API_BASE_URL}/team`, {
@@ -140,10 +126,8 @@ export default function AdultAdminPage() {
     }
   };
 
-  /** DELETE /team */
   const confirmResetTeams = async () => {
     setShowResetModal(false);
-
     try {
       const res = await deleteTeams();
       if (!res.ok) {
@@ -152,7 +136,6 @@ export default function AdultAdminPage() {
       }
 
       alert("팀 데이터 초기화 완료!");
-
       setTeams([]);
       setHasUnbuiltMembers(true);
       setActiveTeam(0);
@@ -162,7 +145,6 @@ export default function AdultAdminPage() {
     }
   };
 
-  // 최초 실행
   useEffect(() => {
     fetchAdultResults();
   }, []);
@@ -182,26 +164,24 @@ export default function AdultAdminPage() {
 
   return (
     <>
-      {/* ===== 개별 삭제 모달 ===== */}
+      {/* 개별 삭제 모달 */}
       {showDeleteModal && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl shadow-xl p-6 w-72 text-center">
-            <h2 className="text-lg font-semibold mb-3">정말 삭제할까요?</h2>
-            <p className="text-sm text-gray-600 mb-5">
+          <div className="bg-white rounded-xl p-6 w-72 text-center">
+            <h2 className="text-xl mb-3">정말 삭제할까요?</h2>
+            <p className="text-gray-600 mb-5">
               선택한 사용자의 응답이 완전히 삭제됩니다.
             </p>
-
             <div className="flex justify-center gap-3">
               <button
                 onClick={() => setShowDeleteModal(false)}
-                className="px-4 py-2 rounded-lg bg-gray-300 text-gray-700 hover:bg-gray-400"
+                className="px-4 py-2 rounded-full bg-gray-300 text-gray-700 hover:bg-gray-400"
               >
                 취소
               </button>
-
               <button
                 onClick={handleDeleteAnswer}
-                className="px-4 py-2 rounded-lg bg-red-500 text-white hover:brightness-95"
+                className="px-4 py-2 rounded-full bg-red-500 text-white hover:brightness-95"
               >
                 삭제
               </button>
@@ -210,25 +190,24 @@ export default function AdultAdminPage() {
         </div>
       )}
 
-      {/* ===== RESET MODAL ===== */}
+      {/* RESET MODAL */}
       {showResetModal && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl shadow-xl p-6 w-72 text-center">
-            <h2 className="text-lg font-semibold mb-3">정말 리셋할까요?</h2>
-            <p className="text-sm text-gray-600 mb-5">
+          <div className="bg-white rounded-2xl p-6 w-72 text-center">
+            <h2 className="text-xl mb-3">정말 리셋할까요?</h2>
+            <p className="text-gray-600 mb-5">
               모든 팀 데이터가 삭제됩니다.
             </p>
-
             <div className="flex justify-center gap-3">
               <button
                 onClick={() => setShowResetModal(false)}
-                className="px-4 py-2 rounded-lg bg-gray-300 text-gray-700 hover:bg-gray-400"
+                className="px-4 py-2 rounded-full bg-gray-300 text-gray-700 hover:bg-gray-400"
               >
                 취소
               </button>
               <button
                 onClick={confirmResetTeams}
-                className="px-4 py-2 rounded-lg bg-red-500 text-white hover:brightness-95"
+                className="px-4 py-2 rounded-full bg-red-500 text-white hover:brightness-95"
               >
                 리셋
               </button>
@@ -237,55 +216,62 @@ export default function AdultAdminPage() {
         </div>
       )}
 
-      {/* ===== PAGE ===== */}
-      <div className="w-full min-h-screen flex flex-col items-center mt-20">
+      {/* PAGE */}
+      <div className="w-full max-w-[375px] md:max-w-[1000px] flex flex-col items-center mt-3 px-6">
 
-        {/* INPUT UI */}
-        <div className="flex flex-col gap-4 w-full max-w-md px-4">
-          <CounterInput
-            label="총원"
-            value={totalMembers}
-            onChange={setTotalMembers}
-            min={answerCount}
-            disabled={!hasUnbuiltMembers}
-          />
+        {/* INPUT UI: 총원/팀개수 + 버튼 */}
+        <div className="w-full flex justify-center">
+          <div className="flex flex-row items-center justify-between w-full max-w-[600px]">
+            {/* 총원/팀개수 col */}
+            <div className="flex flex-col gap-2">
+              <CounterInput
+                label="총원"
+                value={totalMembers}
+                onChange={setTotalMembers}
+                min={answerCount}
+                disabled={!hasUnbuiltMembers}
+              />
+              <CounterInput
+                label="팀 개수"
+                value={teamCount}
+                onChange={setTeamCount}
+                min={1}
+                disabled={!hasUnbuiltMembers}
+              />
+            </div>
 
-          <div className="flex items-center justify-between gap-4">
-            <CounterInput
-              label="팀 개수"
-              value={teamCount}
-              onChange={setTeamCount}
-              min={1}
-              disabled={!hasUnbuiltMembers}
-            />
+    {/* 팀 빌딩 버튼 */}
+    <div className="mt-0">
+      <button
+        onClick={handleBuildTeams}
+        disabled={isButtonDisabled || !hasUnbuiltMembers}
+        className={`rounded-3xl text-lg p-4 transition w-full md:w-auto border border-gray-300 ${
+          isButtonDisabled || !hasUnbuiltMembers
+            ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+            : "bg-[#FF6F00] text-white hover:brightness-95"
+        }`}
+      >
+        팀 빌딩 시작
+      </button>
+    </div>
+  </div>
+</div>
 
-            <button
-              onClick={handleBuildTeams}
-              disabled={isButtonDisabled || !hasUnbuiltMembers}
-              className={`rounded-2xl shadow-md text-lg px-8 py-4 transition ${
-                isButtonDisabled || !hasUnbuiltMembers
-                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  : "bg-[#FF6F00] text-white hover:brightness-95"
-              }`}
-            >
-              팀 빌딩 시작
-            </button>
-          </div>
-
-          <p className="text-sm bg-orange-100 text-orange-700 px-3 py-1 rounded-md font-medium text-center">
-            응답: {answerCount} / {totalMembers}
-          </p>
-        </div>
+        {/* 응답 정보 */}
+        <p className="text-m bg-orange-100 text-orange-700 px-3 py-1 rounded-md text-center w-full md:w-[600px] mb-4 mt-3">
+          응답: {answerCount} / {totalMembers}
+        </p>
 
         {/* TEAM UI */}
         {teams.length > 0 && !hasUnbuiltMembers ? (
-          <div className="w-full max-w-md mt-10 flex flex-col gap-6 px-4 mb-24">
-            {/* 모바일 */}
-            <div className="md:hidden mb-5">
+          <div className="w-full flex flex-col gap-6 mb-16">
+
+            {/* 모바일 select */}
+            <div className="md:hidden flex justify-end">
               <select
                 value={activeTeam}
                 onChange={(e) => setActiveTeam(Number(e.target.value))}
-                className="w-full border px-3 py-2 rounded-lg shadow-sm"
+                className="h-[35px] border border-gray-300 rounded-full px-3"
               >
                 <option value={0}>전체 보기</option>
                 {teams.map((team, idx) => (
@@ -297,10 +283,10 @@ export default function AdultAdminPage() {
             </div>
 
             {/* PC 탭 */}
-            <div className="hidden md:flex overflow-x-auto whitespace-nowrap gap-2 mb-5 px-2">
+            <div className="hidden md:flex overflow-x-auto justify-around hide-scrollbar">
               <button
                 onClick={() => setActiveTeam(0)}
-                className="px-3 py-1.5 rounded-full border text-sm shrink-0 transition"
+                className="px-4 py-1 rounded-full border transition"
                 style={{
                   backgroundColor: activeTeam === 0 ? "#6B7280" : "white",
                   borderColor: "#6B7280",
@@ -316,7 +302,7 @@ export default function AdultAdminPage() {
                   <button
                     key={idx}
                     onClick={() => setActiveTeam(idx + 1)}
-                    className="px-3 py-1.5 rounded-full border text-sm shrink-0 transition hover:opacity-80"
+                    className="px-4 py-1 rounded-full border transition hover:opacity-80"
                     style={{
                       borderColor: color,
                       backgroundColor: activeTeam === idx + 1 ? color : "white",
@@ -329,21 +315,20 @@ export default function AdultAdminPage() {
               })}
             </div>
 
-            {/* 전체 보기 */}
+            {/* 카드 영역 */}
             {activeTeam === 0 &&
               teams.map((team, tIdx) => {
                 const color = TEAM_COLORS[tIdx % TEAM_COLORS.length];
                 return (
                   <div
                     key={tIdx}
-                    className="p-4 rounded-xl shadow bg-white"
+                    className="p-4 rounded-xl bg-white"
                     style={{ borderLeft: `8px solid ${color}` }}
                   >
-                    <h2 className="font-bold text-lg mb-3" style={{ color }}>
+                    <h2 className="text-xl mb-3" style={{ color, fontFamily: 'OkDanDan' }}>
                       {team.teamName}
                     </h2>
-
-                    <div className="flex flex-col gap-2">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {team.members.map((m: any, idx: number) => (
                         <AnswerCard
                           key={idx}
@@ -361,7 +346,7 @@ export default function AdultAdminPage() {
             {/* 특정 팀 */}
             {activeTeam !== 0 && teams[activeTeam - 1] && (
               <div
-                className="p-4 rounded-xl shadow bg-white"
+                className="p-4 rounded-xl bg-white"
                 style={{
                   borderLeft: `8px solid ${
                     TEAM_COLORS[(activeTeam - 1) % TEAM_COLORS.length]
@@ -369,15 +354,15 @@ export default function AdultAdminPage() {
                 }}
               >
                 <h2
-                  className="font-bold text-lg mb-3"
+                  className="font-bold text-xl mb-3"
                   style={{
                     color: TEAM_COLORS[(activeTeam - 1) % TEAM_COLORS.length],
+                    fontFamily: 'OkDanDan'
                   }}
                 >
                   {teams[activeTeam - 1].teamName}
                 </h2>
-
-                <div className="flex flex-col gap-2">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {teams[activeTeam - 1].members.map((m: any, idx: number) => (
                     <AnswerCard
                       key={idx}
@@ -394,37 +379,35 @@ export default function AdultAdminPage() {
             )}
           </div>
         ) : (
-          /* ===== 팀 빌딩 전 ===== */
-          <div className="w-full max-w-md mt-10 flex flex-col gap-4 px-4 mb-24">
-            {results.map((item) => (
-              <div key={item.memberId} className="relative">
-
-                <AnswerCard
-                  name={item.memberName}
-                  answers={item.answers}
-                />
-
-                {/* 삭제 버튼 */}
-                <button
-                  onClick={() => {
-                    setDeleteTargetId(item.memberId);
-                    setShowDeleteModal(true);
-                  }}
-                  className="absolute top-2 right-2 text-red-500 hover:scale-110 transition"
-                >
-                  <Trash2 size={20} strokeWidth={2.2} className="text-red-500" />
-                </button>
-              </div>
-            ))}
+          <div className="w-full flex flex-col gap-4 mb-24">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {results.map((item) => (
+                <div key={item.memberId} className="relative">
+                  <AnswerCard
+                    name={item.memberName}
+                    answers={item.answers}
+                  />
+                  <button
+                    onClick={() => {
+                      setDeleteTargetId(item.memberId);
+                      setShowDeleteModal(true);
+                    }}
+                    className="absolute top-4 right-4 text-red-500 hover:scale-110 transition"
+                  >
+                    <Trash2 size={20} strokeWidth={2.2} className="text-red-500" />
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
         {/* RESET 버튼 */}
         {!hasUnbuiltMembers && (
-          <div className="w-full flex justify-center mb-10">
+          <div className="w-full flex justify-center mb-3">
             <button
               onClick={() => setShowResetModal(true)}
-              className="text-sm bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:brightness-95 font-[Pretendard]"
+              className="text-sm bg-red-500 border border-gray-300 text-white px-4 py-2 rounded-full hover:brightness-95"
             >
               전체 리셋
             </button>
