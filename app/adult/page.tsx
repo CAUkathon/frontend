@@ -39,7 +39,7 @@ export default function AdultAdminPage() {
 
   const [showResetModal, setShowResetModal] = useState<boolean>(false);
 
-  // 🔥 새로 추가됨: 개별 삭제 모달
+  // 개별 삭제 모달
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
 
