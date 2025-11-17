@@ -92,7 +92,7 @@ export default function QuestionsPage() {
       console.log('서버 응답:', data);
 
 	  // 제출 성공시 결과 페이지로 이동
-	  router.push ('/my/${data.id}');
+	  router.push(`/mypage/${data.id}`);
     } catch (err: any) {
       console.error(err);
       alert(err.message || '제출 중 오류가 발생했습니다.');

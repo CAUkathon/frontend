@@ -33,8 +33,9 @@ export default function LoginForm() {
             if (loginRes.role === 'ADULT') {
                 router.push('/adult');
             } else {
-                router.push('/my');
+                router.push(`/mypage/${loginRes.memberId}`);
             }
+
         } catch (error: any) {
             const status = error?.status ?? error?.response?.status ?? (typeof error === 'string' && error.includes('403') ? 403 : undefined);
             // 403: 미가입 상태 (새로운 유저)
