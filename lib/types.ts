@@ -7,6 +7,10 @@ export interface LoginResponse {
     memberId: number;
     name: string;
     role: 'BABY' | 'ADULT';
+    hasQuestionResult?: boolean;
+
+    accessToken?: string;
+    refreshToken?: string;
 }
 
 export interface UserInfo {
