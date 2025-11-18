@@ -37,7 +37,6 @@ export function middleware(req: NextRequest) {
 export const config = {
   matcher: [
     "/adult/:path*",
-    "/team/:path*",
     "/mypage/:path*",
   ],
 };
