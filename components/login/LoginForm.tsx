@@ -1,9 +1,5 @@
 /**
  * LoginForm
- * - 로그인 입력 폼 컴포넌트
- * - 이름, 4자리 비밀번호, 성별 선택
- * - 로그인 API 호출 후 role에 따라 페이지 이동
- * - 403 에러 시 미가입 처리 후 /questions 이동
  */
 
 'use client';
@@ -12,6 +8,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
+import Cookies from "js-cookie";              // ⭐ 추가됨
 import { loginUser } from "@/lib/api";
 import { LoginRequest } from "@/lib/types";
 
@@ -26,15 +23,25 @@ export default function LoginForm() {
     try {
       const loginRes = await loginUser(data);
 
-      // 세션 저장
-      sessionStorage.setItem(
-        "user",
-        JSON.stringify({
-          memberId: loginRes.memberId,
-          name: loginRes.name,
-          role: loginRes.role,
-        })
-      );
+      console.log("🔵 로그인 요청 데이터:", data);
+      console.log("🟢 서버 로그인 응답(loginRes):", loginRes);
+
+      // ==========================================================
+      //  쿠키 저장 (middleware는 sessionStorage를 못 읽기 때문에 필수!)
+      // ==========================================================
+
+      // user 쿠키 저장
+      Cookies.set("user", JSON.stringify({
+        memberId: loginRes.memberId,
+        name: loginRes.name,
+        role: loginRes.role,
+      }), { path: "/" });
+
+      // 관리자라면 토큰도 쿠키에 저장
+      if (loginRes.accessToken) {
+        Cookies.set("token", loginRes.accessToken, { path: "/" });
+        console.log("관리자 토큰 저장됨:", loginRes.accessToken);
+      }
 
       // role에 따라 페이지 이동
       if (loginRes.role === "ADULT") {
@@ -44,30 +51,39 @@ export default function LoginForm() {
       }
 
     } catch (error: any) {
+
       const status =
         error?.status ??
         error?.response?.status ??
-        (typeof error === "string" && error.includes("403") ? 403 : undefined);
+        (typeof error === "string" && error.includes("403") ? 403 :
+         typeof error === "string" && error.includes("409") ? 409 :
+         undefined);
 
-      // 403 = 미가입 유저 → 질문 페이지로
-      if (status === 403) {
-        sessionStorage.setItem(
-          "signup",
-          JSON.stringify({
-            name: data.name,
-            password: data.password,
-            gender,
-          })
-        );
+      const message = error?.message ?? "";
+
+      // 409 = 비밀번호 틀림
+      if (status === 409 || message.includes("비밀번호")) {
+        alert("비밀번호가 올바르지 않습니다.");
+        return;
+      }
+
+      // 403 = 미가입 유저
+      if (status === 403 || message.includes("가입되지 않은")) {
+        Cookies.set("signup", JSON.stringify({
+          name: data.name,
+          password: data.password,
+          gender,
+        }), { path: "/" });
+
         router.push("/questions");
         return;
       }
 
-      alert(error?.message ?? "로그인에 실패했습니다.");
+      alert(message || "로그인에 실패했습니다.");
     }
   };
 
-  // 유효성 검사
+  // 유효성 검사 실패 시 alert
   const onInvalid = (errors: any) => {
     if (errors.name?.message) alert(errors.name.message);
     else if (errors.password?.message) alert(errors.password.message);
@@ -76,6 +92,8 @@ export default function LoginForm() {
   return (
     <div className="flex flex-col items-center gap-6">
       <form onSubmit={handleSubmit(onSubmit, onInvalid)} className="flex flex-col items-center gap-2">
+        
+        {/* 이름 입력 */}
         <div className="flex">
           <input
             {...register("name", { required: "이름을 입력하세요." })}
@@ -84,6 +102,7 @@ export default function LoginForm() {
           />
         </div>
 
+        {/* 비밀번호 입력 */}
         <div className="flex">
           <input
             {...register("password", {
@@ -97,6 +116,7 @@ export default function LoginForm() {
           />
         </div>
 
+        {/* 성별 선택 */}
         <div className="flex justify-center items-center gap-2">
           <select
             value={gender}
@@ -108,6 +128,7 @@ export default function LoginForm() {
           </select>
         </div>
 
+        {/* 로그인 버튼 */}
         <button
           type="submit"
           className="text-2xl border border-gray-300 rounded-full px-5 py-2 mt-7 text-white hover:brightness-95"
@@ -115,6 +136,7 @@ export default function LoginForm() {
         >
           시작하기
         </button>
+
       </form>
     </div>
   );
