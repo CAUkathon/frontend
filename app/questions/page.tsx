@@ -9,8 +9,9 @@
 
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Cookies from "js-cookie";
 import { getQuestions, joinUser } from '@/lib/api';
 import { Question } from '@/lib/types';
 import ProgressRate from '@/components/questions/ProgressRate';
@@ -69,7 +70,7 @@ export default function QuestionsPage() {
   const submitToServer = async () => {
     if (!allAnswered()) return;
 
-    const signup = JSON.parse(sessionStorage.getItem('signup') || '{}');
+    const signup = JSON.parse(Cookies.get("signup") || "{}");
 
     // 척도형 답변 가공
     const payloadAnswers: Record<string, string> = {};
@@ -84,11 +85,8 @@ export default function QuestionsPage() {
       answers: payloadAnswers,
     };
 
-    console.log('제출한 내용:', payload);
-
     try {
       const data = await joinUser(payload);
-      console.log('서버 응답:', data);
       router.push(`/mypage/${data.id}`);
     } catch (err: any) {
       console.error(err);
