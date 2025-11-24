@@ -21,8 +21,6 @@
   src: url("/fonts/OkDanDan.ttf") format("truetype");
 }
 
-@font
-
 @layer base {
   html, body, #__next {
     @apply w-full h-full;

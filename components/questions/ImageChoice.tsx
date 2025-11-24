@@ -11,6 +11,8 @@
  * - onSelect: 선택 시 콜백
  */
 
+import Image from "next/image";
+
 interface Props {
   questionId: number;
   choices: string[];
@@ -34,7 +36,7 @@ export default function ImageChoice({ questionId, choices, selected, onSelect }:
             onClick={() => onSelect(c)}
             className="transition-transform hover:scale-110 active:scale-95"
           >
-            <img src={img} alt={c} className="h-28 object-contain" />
+            <Image src={img} alt={c} width={112} height={112} className="object-contain" />
           </button>
         );
       })}

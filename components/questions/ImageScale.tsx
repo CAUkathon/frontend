@@ -12,6 +12,7 @@
  */
 
 import { Question } from '@/lib/types';
+import Image from 'next/image';
 
 interface Props {
   question: Question;
@@ -56,7 +57,7 @@ export default function ImageScale({ question, selected = [], onSelect }: Props)
                 onClick={() => handleClick(String(btnNumber))}
                 className="transition-transform hover:scale-110 active:scale-95"
               >
-                <img src={img} />
+                <Image src={img} alt='척도형 버튼' width={59} height={94} />
               </button>
             );
           })}
